@@ -17,6 +17,7 @@ import com.ronit.user.user_service.service.UserServiceImpl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

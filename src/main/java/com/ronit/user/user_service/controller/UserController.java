@@ -7,6 +7,7 @@ import com.ronit.user.user_service.dto.UserDto;
 import com.ronit.user.user_service.service.UserService;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
