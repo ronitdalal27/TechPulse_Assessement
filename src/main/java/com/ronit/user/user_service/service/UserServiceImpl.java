@@ -44,22 +44,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String registerUser(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("❌ Email already exists!");
+            throw new RuntimeException(" Email already exists!");
         }
 
-        // ✅ Determine role from request (default: ROLE_USER)
+        //  Determine role from request (default: ROLE_USER)
         String roleName = (request.getRole() == null || request.getRole().isEmpty())
                 ? "ROLE_USER"
                 : request.getRole().toUpperCase();
 
-        // ✅ Fetch or create role dynamically
+        //  Fetch or create role dynamically
         Role role = roleRepository.findByName(roleName)
                 .orElseGet(() -> roleRepository.save(new Role(null, roleName)));
 
         Set<Role> roles = new HashSet<>();
         roles.add(role);
 
-        // ✅ Create new User entity
+        //  Create new User entity
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         userRepository.save(user);
 
-        return "✅ User registered successfully with role: " + role.getName();
+        return "User registered successfully with role: " + role.getName();
     }
 
     @Override
@@ -102,11 +102,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    // ✅ Spring Security integration for authentication
+    //  Spring Security integration for authentication
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("❌ User not found with email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException(" User not found with email: " + email));
 
         String[] roles = user.getRoles().stream()
                 .map(role -> role.getName().replace("ROLE_", "")) // Spring auto-adds ROLE_ prefix
